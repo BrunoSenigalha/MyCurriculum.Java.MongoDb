@@ -1,5 +1,7 @@
 package com.brunosenigalha.curriculumMongoDb.entities;
 
+import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,7 +12,7 @@ public class Curriculum implements Serializable {
     private String id;
     private String picture;
     private String name;
-    private Integer gender;
+    private Gender gender;
     private String professionalGoals;
     private String phone;
     private String email;
@@ -20,7 +22,7 @@ public class Curriculum implements Serializable {
     public Curriculum() {
     }
 
-    public Curriculum(String id, String picture, String name, Integer gender, String professionalGoals, String phone, String email, String linkedIn) {
+    public Curriculum(String id, String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn) {
         this.id = id;
         this.picture = picture;
         this.name = name;
@@ -55,11 +57,11 @@ public class Curriculum implements Serializable {
         this.name = name;
     }
 
-    public Integer getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
