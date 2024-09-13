@@ -3,9 +3,12 @@ package com.brunosenigalha.curriculumMongoDb.entities;
 import com.brunosenigalha.curriculumMongoDb.dto.AddressDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Document
@@ -22,6 +25,9 @@ public class Curriculum implements Serializable {
     private String linkedIn;
 
     private AddressDTO addressDTO;
+
+    @DBRef(lazy = true)
+    private List<Course> courses = new ArrayList<>();
 
 
     public Curriculum() {
@@ -108,6 +114,14 @@ public class Curriculum implements Serializable {
 
     public void setAddressDTO(AddressDTO addressDTO) {
         this.addressDTO = addressDTO;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override
