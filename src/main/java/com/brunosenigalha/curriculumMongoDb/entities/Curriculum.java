@@ -1,14 +1,17 @@
 package com.brunosenigalha.curriculumMongoDb.entities;
 
+import com.brunosenigalha.curriculumMongoDb.dto.AddressDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Document
 public class Curriculum implements Serializable {
 
-
+    @Id
     private String id;
     private String picture;
     private String name;
@@ -17,6 +20,8 @@ public class Curriculum implements Serializable {
     private String phone;
     private String email;
     private String linkedIn;
+
+    private AddressDTO addressDTO;
 
 
     public Curriculum() {
@@ -95,6 +100,14 @@ public class Curriculum implements Serializable {
 
     public void setLinkedIn(String linkedIn) {
         this.linkedIn = linkedIn;
+    }
+
+    public AddressDTO getAddressDTO() {
+        return addressDTO;
+    }
+
+    public void setAddressDTO(AddressDTO addressDTO) {
+        this.addressDTO = addressDTO;
     }
 
     @Override

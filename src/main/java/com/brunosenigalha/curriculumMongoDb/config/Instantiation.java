@@ -1,5 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.config;
 
+import com.brunosenigalha.curriculumMongoDb.dto.AddressDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.Curriculum;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
 import com.brunosenigalha.curriculumMongoDb.repositories.CurriculumRepository;
@@ -25,6 +26,11 @@ public class Instantiation implements CommandLineRunner {
         Curriculum c2 = new Curriculum(null, " ", "Maria", Gender.FEMININO,
                 "Product Manager", "87777777", "maria@gmail.com", "www.linkedin.com/maria");
 
+        AddressDTO addr1 = new AddressDTO("0254559", "São Paulo", "São Paulo", "Brasil");
+        AddressDTO addr2 = new AddressDTO("5856666", "Minas Gerais", "Montes Claros", "Brasil");
+
+        c1.setAddressDTO(addr1);
+        c2.setAddressDTO(addr2);
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
     }
 }
