@@ -1,7 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
 import com.brunosenigalha.curriculumMongoDb.entities.Course;
-import com.brunosenigalha.curriculumMongoDb.entities.Curriculum;
 import com.brunosenigalha.curriculumMongoDb.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

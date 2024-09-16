@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
-import com.brunosenigalha.curriculumMongoDb.entities.Curriculum;
+import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.CurriculumRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.ResourceNotFoundException;
@@ -16,20 +16,20 @@ public class CurriculumService {
     @Autowired
     private CurriculumRepository repository;
 
-    public List<Curriculum> findAll() {
+    public List<CurriculumEntity> findAll() {
         return repository.findAll();
     }
 
-    public Curriculum findById(String id) {
+    public CurriculumEntity findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Curriculum insert(Curriculum obj) {
+    public CurriculumEntity insert(CurriculumEntity obj) {
         return repository.save(obj);
     }
 
-    public Curriculum update(String id, Curriculum obj){
+    public CurriculumEntity update(String id, CurriculumEntity obj){
         return repository.findById(id)
                 .map(entity -> {
                     updateData(entity, obj);
@@ -39,7 +39,7 @@ public class CurriculumService {
     }
 
     public void delete(String id){
-        Curriculum entity = repository.findById(id)
+        CurriculumEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         try{
             repository.delete(entity);
@@ -48,7 +48,7 @@ public class CurriculumService {
         }
     }
 
-    private void updateData(Curriculum entity, Curriculum obj){
+    private void updateData(CurriculumEntity entity, CurriculumEntity obj){
         entity.setPicture(obj.getPicture());
         entity.setName(obj.getName());
         entity.setGender(obj.getGender());

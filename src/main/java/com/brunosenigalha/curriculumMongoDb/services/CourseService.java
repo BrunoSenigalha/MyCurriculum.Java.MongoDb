@@ -1,7 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
 import com.brunosenigalha.curriculumMongoDb.entities.Course;
-import com.brunosenigalha.curriculumMongoDb.entities.Curriculum;
 import com.brunosenigalha.curriculumMongoDb.repositories.CourseRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.ResourceNotFoundException;
