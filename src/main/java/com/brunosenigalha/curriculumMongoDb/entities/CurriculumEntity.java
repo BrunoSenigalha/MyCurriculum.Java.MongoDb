@@ -45,4 +45,15 @@ public class CurriculumEntity implements Serializable {
         this.email = email;
         this.linkedIn = linkedIn;
     }
+
+//    public CurriculumEntity(String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn, AddressEntity address) {
+//        this.picture = picture;
+//        this.name = name;
+//        this.gender = gender;
+//        this.professionalGoals = professionalGoals;
+//        this.phone = phone;
+//        this.email = email;
+//        this.linkedIn = linkedIn;
+//        this.address = address;
+//    }
 }

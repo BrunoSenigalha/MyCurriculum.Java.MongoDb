@@ -30,13 +30,12 @@ public class CurriculumService {
         return repository.save(obj);
     }
 
-    public CurriculumEntity update(String id, CurriculumEntity obj) {
-        return repository.findById(id).map(entity -> {
-//                    BeanUtils.copyProperties(obj, entity);
+    public CurriculumEntity update(CurriculumEntity obj) {
+        return repository.findById(obj.getId()).map(entity -> {
                     updateData(entity, obj);
                     return repository.save(entity);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(obj.getId()));
     }
 
     public void delete(String id) {
@@ -53,7 +52,6 @@ public class CurriculumService {
         entity.setPicture(obj.getPicture());
         entity.setName(obj.getName());
         entity.setGender(obj.getGender());
-        entity.setAddress(obj.getAddress());
         entity.setProfessionalGoals(obj.getProfessionalGoals());
         entity.setPhone(obj.getPhone());
         entity.setEmail(obj.getEmail());
