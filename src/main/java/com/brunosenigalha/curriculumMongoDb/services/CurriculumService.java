@@ -16,6 +16,7 @@ public class CurriculumService {
     @Autowired
     private CurriculumRepository repository;
 
+
     public List<CurriculumEntity> findAll() {
         return repository.findAll();
     }
@@ -29,21 +30,21 @@ public class CurriculumService {
         return repository.save(obj);
     }
 
-    public CurriculumEntity update(String id, CurriculumEntity obj){
-        return repository.findById(id)
-                .map(entity -> {
+    public CurriculumEntity update(String id, CurriculumEntity obj) {
+        return repository.findById(id).map(entity -> {
+//                    BeanUtils.copyProperties(obj, entity);
                     updateData(entity, obj);
                     return repository.save(entity);
                 })
-                .orElseThrow(()-> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void delete(String id){
+    public void delete(String id) {
         CurriculumEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
-        try{
+        try {
             repository.delete(entity);
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -52,7 +53,7 @@ public class CurriculumService {
         entity.setPicture(obj.getPicture());
         entity.setName(obj.getName());
         entity.setGender(obj.getGender());
-        entity.setAddressDTO(obj.getAddressDTO());
+        entity.setAddress(obj.getAddress());
         entity.setProfessionalGoals(obj.getProfessionalGoals());
         entity.setPhone(obj.getPhone());
         entity.setEmail(obj.getEmail());

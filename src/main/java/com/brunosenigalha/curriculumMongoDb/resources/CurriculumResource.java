@@ -14,41 +14,35 @@ import java.util.List;
 public class CurriculumResource {
 
     @Autowired
-    public CurriculumService service;
+    private CurriculumService curriculumService;
 
     @GetMapping
     public ResponseEntity<List<CurriculumEntity>> findAll() {
-        List<CurriculumEntity> list = service.findAll();
+        List<CurriculumEntity> list = curriculumService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<CurriculumEntity> findById(@PathVariable String id) {
-        CurriculumEntity obj = service.findById(id);
+        CurriculumEntity obj = curriculumService.findById(id);
         return ResponseEntity.ok(obj);
     }
-    //    @PostMapping
-//    public ResponseEntity<Curriculum> insert(@RequestBody Curriculum obj){
-//        obj = service.insert(obj);
-//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(obj.getId()).toUri();
-//        return ResponseEntity.created(uri).body(obj);
-//    }
+
     @PostMapping
     public ResponseEntity<CurriculumEntity> insert(@RequestBody CurriculumEntity obj) {
-        obj = service.insert(obj);
+        obj = curriculumService.insert(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumEntity obj){
-        CurriculumEntity entity = service.update(id, obj);
+        CurriculumEntity entity = curriculumService.update(id, obj);
         return ResponseEntity.ok(entity);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){
-        service.delete(id);
+        curriculumService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,5 @@
 package com.brunosenigalha.curriculumMongoDb.entities;
 
-import com.brunosenigalha.curriculumMongoDb.dto.request.AddressRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -29,7 +28,7 @@ public class CurriculumEntity implements Serializable {
     private String email;
     private String linkedIn;
 
-    private AddressRequestDTO addressDTO;
+    private AddressEntity address;
 
     @DBRef(lazy = true)
     private List<Course> courses = new ArrayList<>();
@@ -37,4 +36,13 @@ public class CurriculumEntity implements Serializable {
     @DBRef(lazy = true)
     private List<AcademicExp> academicExpList = new ArrayList<>();
 
+    public CurriculumEntity(String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn) {
+        this.picture = picture;
+        this.name = name;
+        this.gender = gender;
+        this.professionalGoals = professionalGoals;
+        this.phone = phone;
+        this.email = email;
+        this.linkedIn = linkedIn;
+    }
 }

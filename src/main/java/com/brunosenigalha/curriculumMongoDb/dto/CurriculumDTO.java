@@ -1,15 +1,13 @@
-package com.brunosenigalha.curriculumMongoDb.dto.response;
+package com.brunosenigalha.curriculumMongoDb.dto;
 
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
 
-public record CurriculumResponseDTO(
-        String id,
+public record CurriculumDTO(
         String picture,
         String name,
         Gender gender,
         String professionalGoals,
         String phone,
         String email,
-        String linkedIn,
-        AddressResponseDTO address) {
+        String linkedIn) {
 }
