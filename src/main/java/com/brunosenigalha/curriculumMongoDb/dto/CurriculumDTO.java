@@ -1,16 +1,22 @@
 package com.brunosenigalha.curriculumMongoDb.dto;
 
-import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
+import lombok.*;
 
-public record CurriculumDTO(
-        String id,
-        String picture,
-        String name,
-        Gender gender,
-        String professionalGoals,
-        String phone,
-        String email,
-        String linkedIn,
-        AddressEntity address) {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
+public class CurriculumDTO {
+        private String id;
+        private String picture;
+        private String name;
+        private Gender gender;
+        private String professionalGoals;
+        private String phone;
+        private String email;
+        private String linkedIn;
+        private AddressDTO address;
 }

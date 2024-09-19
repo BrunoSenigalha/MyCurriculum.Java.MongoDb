@@ -35,13 +35,12 @@ public class CurriculumResource {
 
     @PostMapping
     public ResponseEntity<CurriculumEntity> insert(@RequestBody CurriculumDTO objDTO) {
-        CurriculumEntity obj = converterData.forCurriculumEntity(objDTO);
-        obj = curriculumService.insert(obj);
+        CurriculumEntity obj = curriculumService.insertCurriculumHandler(objDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumDTO objDTO){
+    public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumDTO objDTO) {
         CurriculumEntity entity = converterData.forCurriculumEntity(objDTO);
         entity.setId(id);
         entity = curriculumService.update(entity);
@@ -49,7 +48,7 @@ public class CurriculumResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id){
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         curriculumService.delete(id);
         return ResponseEntity.noContent().build();
     }

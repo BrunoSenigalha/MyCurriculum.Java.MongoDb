@@ -38,6 +38,8 @@ public class Instantiation implements CommandLineRunner {
 
         curriculumRepository.deleteAll();
         courseRepository.deleteAll();
+        academicExpRepository.deleteAll();
+        addressRepository.deleteAll();
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -64,8 +66,8 @@ public class Instantiation implements CommandLineRunner {
 
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
 
-        AddressEntity addr1 = new AddressEntity(null, c1.getId(), "8566698", "São Paulo", "São Paulo", "Brasil");
-        AddressEntity addr2 = new AddressEntity(null, c2.getId(), "898222", "Minas Gerais", "Montes Claros", "Brasil");
+        AddressEntity addr1 = new AddressEntity(UUID.randomUUID().toString(), c1.getId(), "8566698", "São Paulo", "São Paulo", "Brasil");
+        AddressEntity addr2 = new AddressEntity(UUID.randomUUID().toString(),c2.getId(), "898222", "Minas Gerais", "Montes Claros", "Brasil");
         addressRepository.saveAll(Arrays.asList(addr1, addr2));
 
         c1.setAddress(addr1);
