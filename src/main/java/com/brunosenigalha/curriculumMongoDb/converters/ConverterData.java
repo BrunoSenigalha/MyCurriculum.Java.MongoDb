@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ConverterData {
 
-    public CurriculumEntity forCurriculumEntity(CurriculumRequestDTO objDTO){
+    public CurriculumEntity forCurriculumEntity(CurriculumRequestDTO objDTO) {
         return CurriculumEntity.builder()
                 .id(UUID.randomUUID().toString())
                 .picture(objDTO.getPicture())
@@ -26,8 +26,9 @@ public class ConverterData {
                 .build();
     }
 
-    public AddressEntity forAddressEntity(AddressRequestDTO objDTO, String id){
+    public AddressEntity forAddressEntity(AddressRequestDTO objDTO, String id) {
         return AddressEntity.builder()
+                .id(UUID.randomUUID().toString())
                 .curriculumId(id)
                 .zipCode(objDTO.getZipCode())
                 .state(objDTO.getState())
@@ -35,5 +36,4 @@ public class ConverterData {
                 .country(objDTO.getCountry())
                 .build();
     }
-//    public AddressEntity forAddressEntity(Ad)
 }

@@ -4,6 +4,7 @@ import com.brunosenigalha.curriculumMongoDb.converters.ConverterData;
 import com.brunosenigalha.curriculumMongoDb.converters.CurriculumMapper;
 import com.brunosenigalha.curriculumMongoDb.dto.request.CurriculumRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.dto.response.CurriculumResponseDTO;
+import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.CurriculumRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.mongodb.assertions.Assertions.notNull;
 
 @Service
 @RequiredArgsConstructor
@@ -33,39 +32,40 @@ public class CurriculumService {
 
 
     public List<CurriculumResponseDTO> findAll() {
-        List<CurriculumEntity> curriculumEntities = repository.findAll();
-        return curriculumEntities.stream()
+        return repository.findAll().stream()
                 .map(entity -> curriculumMapper.forCurriculumResponseDTO(entity))
                 .collect(Collectors.toList());
     }
+
 
     public CurriculumEntity findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public CurriculumEntity findByEmail(String email){
-      try{
-          return repository.findByEmail(email);
-      }catch (Exception e){
-          throw new ResourceNotFoundException(email + " " + e.getMessage());
-      }
-    }
 
-    public CurriculumEntity insertCurriculum(CurriculumEntity obj) {
-        return repository.save(obj);
-    }
-
-    public CurriculumEntity insertCurriculumHandler(CurriculumRequestDTO curriculumDTO) {
+    public CurriculumEntity findByEmail(String email) {
         try {
-            CurriculumEntity curriculumEntity = insertCurriculum(converterData.forCurriculumEntity(curriculumDTO));
-            addressService.convertAddress(curriculumDTO, curriculumEntity);
-            return curriculumEntity;
+            return repository.findByEmail(email);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException(email + " " + e.getMessage());
+        }
+    }
 
+
+    public CurriculumResponseDTO insertCurriculum(CurriculumRequestDTO curriculumDTO) {
+        try {
+            CurriculumEntity curriculumEntity = curriculumAndAddressConverter(curriculumDTO);
+            repository.save(curriculumEntity);
+
+            return curriculumMapper.forCurriculumResponseDTO(curriculumEntity);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Database integrity violation:  " + e.getMessage());
         } catch (Exception e) {
             throw new DatabaseException("Error: Trying to save Curriculum " + e.getMessage());
         }
     }
+
 
     public CurriculumEntity update(CurriculumEntity obj) {
         return repository.findById(obj.getId()).map(entity -> {
@@ -75,6 +75,7 @@ public class CurriculumService {
                 .orElseThrow(() -> new ResourceNotFoundException(obj.getId()));
     }
 
+
     public void delete(String id) {
         CurriculumEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -83,6 +84,16 @@ public class CurriculumService {
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+
+    private CurriculumEntity curriculumAndAddressConverter(CurriculumRequestDTO curriculumDTO){
+        CurriculumEntity curriculumEntity = converterData.forCurriculumEntity(curriculumDTO);
+
+        AddressEntity addressEntity = addressService.insertAddress(converterData.forAddressEntity(curriculumDTO.getAddress(), curriculumEntity.getId()));
+        curriculumEntity.setAddress(addressEntity);
+
+        return curriculumEntity;
     }
 
 

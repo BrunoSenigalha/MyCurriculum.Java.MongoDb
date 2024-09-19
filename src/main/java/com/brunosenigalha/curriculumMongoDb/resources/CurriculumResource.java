@@ -41,8 +41,8 @@ public class CurriculumResource {
     }
 
     @PostMapping
-    public ResponseEntity<CurriculumEntity> insert(@RequestBody CurriculumRequestDTO objDTO) {
-        CurriculumEntity obj = curriculumService.insertCurriculumHandler(objDTO);
+    public ResponseEntity<CurriculumResponseDTO> insert(@RequestBody CurriculumRequestDTO objDTO) {
+        CurriculumResponseDTO obj = curriculumService.insertCurriculum(objDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 

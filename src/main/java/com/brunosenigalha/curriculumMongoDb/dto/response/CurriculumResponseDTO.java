@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.dto.response;
 
-import com.brunosenigalha.curriculumMongoDb.dto.request.AddressRequestDTO;
+import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
 
 public record CurriculumResponseDTO(
@@ -12,5 +12,5 @@ public record CurriculumResponseDTO(
         String phone,
         String email,
         String linkedIn,
-        AddressRequestDTO address) {
+        AddressEntity address) {
 }

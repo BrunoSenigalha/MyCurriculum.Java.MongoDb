@@ -18,12 +18,12 @@ public class AddressService {
     @Autowired
     private ConverterData converterData;
 
-    public void insertAddress(AddressEntity addressEntity){
-        addressRepository.save(addressEntity);
+    public AddressEntity insertAddress(AddressEntity addressEntity){
+        return addressRepository.save(addressEntity);
     }
 
-    public void convertAddress(CurriculumRequestDTO curriculumDTO, CurriculumEntity curriculumEntity){
-        insertAddress(converterData.forAddressEntity(curriculumDTO.getAddress(),
-                curriculumEntity.getId()));
-    }
+//    public AddressEntity convertAddress(CurriculumRequestDTO curriculumDTO, CurriculumEntity curriculumEntity){
+//       return insertAddress(converterData.forAddressEntity(curriculumDTO.getAddress(),
+//                curriculumEntity.getId()));
+//    }
 }
