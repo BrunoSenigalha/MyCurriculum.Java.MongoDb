@@ -18,6 +18,9 @@ public class CurriculumResource {
     @Autowired
     private CurriculumService curriculumService;
 
+    @Autowired
+    private ConverterData converterData;
+
     @GetMapping
     public ResponseEntity<List<CurriculumEntity>> findAll() {
         List<CurriculumEntity> list = curriculumService.findAll();
@@ -32,14 +35,14 @@ public class CurriculumResource {
 
     @PostMapping
     public ResponseEntity<CurriculumEntity> insert(@RequestBody CurriculumDTO objDTO) {
-        CurriculumEntity obj = ConverterData.curriculumFromDTO(objDTO);
+        CurriculumEntity obj = converterData.forCurriculumEntity(objDTO);
         obj = curriculumService.insert(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumDTO objDTO){
-        CurriculumEntity entity = ConverterData.curriculumFromDTO(objDTO);
+        CurriculumEntity entity = converterData.forCurriculumEntity(objDTO);
         entity.setId(id);
         entity = curriculumService.update(entity);
         return ResponseEntity.ok(entity);

@@ -36,7 +36,8 @@ public class CurriculumEntity implements Serializable {
     @DBRef(lazy = true)
     private List<AcademicExp> academicExpList = new ArrayList<>();
 
-    public CurriculumEntity(String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn) {
+    public CurriculumEntity(String id, String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn) {
+        this.id = id;
         this.picture = picture;
         this.name = name;
         this.gender = gender;

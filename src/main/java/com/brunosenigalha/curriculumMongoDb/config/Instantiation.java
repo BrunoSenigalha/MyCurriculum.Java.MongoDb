@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.UUID;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -40,11 +41,10 @@ public class Instantiation implements CommandLineRunner {
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        CurriculumEntity c1 = new CurriculumEntity(" ", "João Carlos", Gender.MASCULINO,
+        CurriculumEntity c1 = new CurriculumEntity(UUID.randomUUID().toString(), " ", "João Carlos", Gender.MASCULINO,
                 "Desenvolvedor de Sistemas", "85555855", "joao@gmail.com", "www.linkedin.com/joao");
-        CurriculumEntity c2 = new CurriculumEntity(" ", "Maria", Gender.FEMININO,
+        CurriculumEntity c2 = new CurriculumEntity(UUID.randomUUID().toString(), " ", "Maria", Gender.FEMININO,
                 "Product Manager", "87777777", "maria@gmail.com", "www.linkedin.com/maria");
-
 
 
         Course course1 = new Course(null, TypeCourse.CURSO, "Java", "Curso completo de Java");
@@ -64,8 +64,8 @@ public class Instantiation implements CommandLineRunner {
 
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
 
-        AddressEntity addr1 = new AddressEntity(null, c1.getId(),"8566698" ,"São Paulo", "São Paulo", "Brasil");
-        AddressEntity addr2 = new AddressEntity(null, c2.getId(),"898222" ,"Minas Gerais", "Montes Claros", "Brasil");
+        AddressEntity addr1 = new AddressEntity(null, c1.getId(), "8566698", "São Paulo", "São Paulo", "Brasil");
+        AddressEntity addr2 = new AddressEntity(null, c2.getId(), "898222", "Minas Gerais", "Montes Claros", "Brasil");
         addressRepository.saveAll(Arrays.asList(addr1, addr2));
 
         c1.setAddress(addr1);
