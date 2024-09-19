@@ -1,7 +1,7 @@
 package com.brunosenigalha.curriculumMongoDb.converters;
 
-import com.brunosenigalha.curriculumMongoDb.dto.AddressDTO;
-import com.brunosenigalha.curriculumMongoDb.dto.CurriculumDTO;
+import com.brunosenigalha.curriculumMongoDb.dto.request.AddressRequestDTO;
+import com.brunosenigalha.curriculumMongoDb.dto.request.CurriculumRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ConverterData {
 
-    public CurriculumEntity forCurriculumEntity(CurriculumDTO objDTO){
+    public CurriculumEntity forCurriculumEntity(CurriculumRequestDTO objDTO){
         return CurriculumEntity.builder()
                 .id(UUID.randomUUID().toString())
                 .picture(objDTO.getPicture())
@@ -26,7 +26,7 @@ public class ConverterData {
                 .build();
     }
 
-    public AddressEntity forAddressEntity(AddressDTO objDTO, String id){
+    public AddressEntity forAddressEntity(AddressRequestDTO objDTO, String id){
         return AddressEntity.builder()
                 .curriculumId(id)
                 .zipCode(objDTO.getZipCode())

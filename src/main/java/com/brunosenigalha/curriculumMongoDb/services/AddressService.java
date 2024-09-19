@@ -1,7 +1,7 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
 import com.brunosenigalha.curriculumMongoDb.converters.ConverterData;
-import com.brunosenigalha.curriculumMongoDb.dto.CurriculumDTO;
+import com.brunosenigalha.curriculumMongoDb.dto.request.CurriculumRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.AddressRepository;
@@ -22,7 +22,7 @@ public class AddressService {
         addressRepository.save(addressEntity);
     }
 
-    public void convertAddress(CurriculumDTO curriculumDTO, CurriculumEntity curriculumEntity){
+    public void convertAddress(CurriculumRequestDTO curriculumDTO, CurriculumEntity curriculumEntity){
         insertAddress(converterData.forAddressEntity(curriculumDTO.getAddress(),
                 curriculumEntity.getId()));
     }

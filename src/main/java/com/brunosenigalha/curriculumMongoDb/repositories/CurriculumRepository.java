@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CurriculumRepository extends MongoRepository<CurriculumEntity, String> {
+
+    CurriculumEntity findByEmail(String email);
 }

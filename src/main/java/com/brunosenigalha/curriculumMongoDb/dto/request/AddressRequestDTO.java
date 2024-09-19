@@ -1,4 +1,4 @@
-package com.brunosenigalha.curriculumMongoDb.dto;
+package com.brunosenigalha.curriculumMongoDb.dto.request;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class AddressDTO {
+public class AddressRequestDTO {
        private String zipCode;
        private String state;
        private String city;

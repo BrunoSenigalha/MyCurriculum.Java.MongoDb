@@ -1,7 +1,8 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
 import com.brunosenigalha.curriculumMongoDb.converters.ConverterData;
-import com.brunosenigalha.curriculumMongoDb.dto.CurriculumDTO;
+import com.brunosenigalha.curriculumMongoDb.dto.request.CurriculumRequestDTO;
+import com.brunosenigalha.curriculumMongoDb.dto.response.CurriculumResponseDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.services.CurriculumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class CurriculumResource {
     private ConverterData converterData;
 
     @GetMapping
-    public ResponseEntity<List<CurriculumEntity>> findAll() {
-        List<CurriculumEntity> list = curriculumService.findAll();
+    public ResponseEntity<List<CurriculumResponseDTO>> findAll() {
+        List<CurriculumResponseDTO> list = curriculumService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
@@ -33,14 +34,20 @@ public class CurriculumResource {
         return ResponseEntity.ok(obj);
     }
 
+    @GetMapping(value = "/emailsearch")
+    public ResponseEntity<CurriculumEntity> findCurriculumByEmail(@RequestParam ("email") String email){
+        CurriculumEntity entity = curriculumService.findByEmail(email);
+        return ResponseEntity.ok(entity);
+    }
+
     @PostMapping
-    public ResponseEntity<CurriculumEntity> insert(@RequestBody CurriculumDTO objDTO) {
+    public ResponseEntity<CurriculumEntity> insert(@RequestBody CurriculumRequestDTO objDTO) {
         CurriculumEntity obj = curriculumService.insertCurriculumHandler(objDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumDTO objDTO) {
+    public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumRequestDTO objDTO) {
         CurriculumEntity entity = converterData.forCurriculumEntity(objDTO);
         entity.setId(id);
         entity = curriculumService.update(entity);

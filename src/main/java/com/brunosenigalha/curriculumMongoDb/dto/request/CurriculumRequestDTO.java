@@ -1,4 +1,4 @@
-package com.brunosenigalha.curriculumMongoDb.dto;
+package com.brunosenigalha.curriculumMongoDb.dto.request;
 
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Gender;
 import lombok.*;
@@ -9,8 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class CurriculumDTO {
-        private String id;
+public class CurriculumRequestDTO {
         private String picture;
         private String name;
         private Gender gender;
@@ -18,5 +17,5 @@ public class CurriculumDTO {
         private String phone;
         private String email;
         private String linkedIn;
-        private AddressDTO address;
+        private AddressRequestDTO address;
 }
