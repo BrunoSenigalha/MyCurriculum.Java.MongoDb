@@ -66,12 +66,12 @@ public class CurriculumService {
     }
 
 
-    public CurriculumEntity update(CurriculumEntity obj) {
-        return repository.findById(obj.getId()).map(entity -> {
-                    updateData(entity, obj);
+    public CurriculumEntity update(String id, CurriculumRequestDTO objDTO) {
+        return repository.findById(id).map(entity -> {
+                    updateData(entity, objDTO);
                     return repository.save(entity);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(obj.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
 
@@ -95,14 +95,16 @@ public class CurriculumService {
         return curriculumEntity;
     }
 
+    private void updateData(CurriculumEntity entity, CurriculumRequestDTO objDTO) {
+        entity.setPicture(objDTO.getPicture());
+        entity.setName(objDTO.getName());
+        entity.setGender(objDTO.getGender());
+        entity.setProfessionalGoals(objDTO.getProfessionalGoals());
+        entity.setPhone(objDTO.getPhone());
+        entity.setEmail(objDTO.getEmail());
+        entity.setLinkedIn(objDTO.getLinkedIn());
 
-    private void updateData(CurriculumEntity entity, CurriculumEntity obj) {
-        entity.setPicture(obj.getPicture());
-        entity.setName(obj.getName());
-        entity.setGender(obj.getGender());
-        entity.setProfessionalGoals(obj.getProfessionalGoals());
-        entity.setPhone(obj.getPhone());
-        entity.setEmail(obj.getEmail());
-        entity.setLinkedIn(obj.getLinkedIn());
+        AddressEntity addressEntity = addressService.updateAddress(entity.getAddress().getId(), objDTO.getAddress());
+        entity.setAddress(addressEntity);
     }
 }

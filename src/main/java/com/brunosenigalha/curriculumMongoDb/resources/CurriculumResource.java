@@ -50,9 +50,7 @@ public class CurriculumResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<CurriculumEntity> update(@PathVariable String id, @RequestBody CurriculumRequestDTO objDTO) {
-        CurriculumEntity entity = converterData.forCurriculumEntity(objDTO);
-        entity.setId(id);
-        entity = curriculumService.update(entity);
+        CurriculumEntity entity = curriculumService.update(id, objDTO);
         return ResponseEntity.ok(entity);
     }
 
