@@ -28,6 +28,7 @@ public class CurriculumResource {
         return ResponseEntity.ok().body(list);
     }
 
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<CurriculumEntity> findById(@PathVariable String id) {
         CurriculumEntity obj = curriculumService.findById(id);
@@ -35,9 +36,10 @@ public class CurriculumResource {
     }
 
     @GetMapping(value = "/emailsearch")
-    public ResponseEntity<CurriculumEntity> findCurriculumByEmail(@RequestParam ("email") String email){
+    public ResponseEntity<CurriculumEntity> findCurriculumByEmail(@RequestParam("email") String email) {
         CurriculumEntity entity = curriculumService.findByEmail(email);
         return ResponseEntity.ok(entity);
+
     }
 
     @PostMapping

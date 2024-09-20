@@ -15,7 +15,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +32,8 @@ public class CurriculumService {
 
     public List<CurriculumResponseDTO> findAll() {
         return repository.findAll().stream()
-                .map(entity -> curriculumMapper.forCurriculumResponseDTO(entity))
-                .collect(Collectors.toList());
+                .map(curriculumMapper::forCurriculumResponseDTO)
+                .toList();
     }
 
 
@@ -45,17 +44,17 @@ public class CurriculumService {
 
 
     public CurriculumEntity findByEmail(String email) {
-        try {
+        CurriculumEntity entity = repository.findByEmail(email);
+        if (entity != null) {
             return repository.findByEmail(email);
-        } catch (Exception e) {
-            throw new ResourceNotFoundException(email + " " + e.getMessage());
         }
+        throw new ResourceNotFoundException("Email not found");
     }
 
 
     public CurriculumResponseDTO insertCurriculum(CurriculumRequestDTO curriculumDTO) {
         try {
-            CurriculumEntity curriculumEntity = curriculumAndAddressConverter(curriculumDTO);
+            CurriculumEntity curriculumEntity = curriculumAndAddressConverterToInsert(curriculumDTO);
             repository.save(curriculumEntity);
 
             return curriculumMapper.forCurriculumResponseDTO(curriculumEntity);
@@ -87,7 +86,7 @@ public class CurriculumService {
     }
 
 
-    private CurriculumEntity curriculumAndAddressConverter(CurriculumRequestDTO curriculumDTO){
+    private CurriculumEntity curriculumAndAddressConverterToInsert(CurriculumRequestDTO curriculumDTO) {
         CurriculumEntity curriculumEntity = converterData.forCurriculumEntity(curriculumDTO);
 
         AddressEntity addressEntity = addressService.insertAddress(converterData.forAddressEntity(curriculumDTO.getAddress(), curriculumEntity.getId()));

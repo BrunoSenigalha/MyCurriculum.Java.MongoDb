@@ -18,4 +18,5 @@ public interface CurriculumMapper {
     @Mapping(target = "linkedIn", source = "curriculum.linkedIn")
     @Mapping(target = "address", source = "curriculum.address")
     CurriculumResponseDTO forCurriculumResponseDTO(CurriculumEntity curriculum);
+
 }
