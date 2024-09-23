@@ -1,5 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
+import com.brunosenigalha.curriculumMongoDb.dto.request.CourseRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
 import com.brunosenigalha.curriculumMongoDb.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,14 @@ public class CourseResource {
     }
 
     @PostMapping
-    public ResponseEntity<CourseEntity> insert(@RequestBody CourseEntity obj) {
-        obj = service.insert(obj);
-        return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+    public ResponseEntity<CourseEntity> insert(@RequestBody CourseRequestDTO objDTO) {
+        CourseEntity entity = service.insert(objDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CourseEntity> update(@PathVariable String id, @RequestBody CourseEntity obj){
-        CourseEntity entity = service.update(id, obj);
+    public ResponseEntity<CourseEntity> update(@PathVariable String id, @RequestBody CourseRequestDTO objDTO){
+        CourseEntity entity = service.update(id, objDTO);
         return ResponseEntity.ok(entity);
     }
 

@@ -1,5 +1,7 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
+import com.brunosenigalha.curriculumMongoDb.converters.CourseConverter;
+import com.brunosenigalha.curriculumMongoDb.dto.request.CourseRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.CourseRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
@@ -15,6 +17,8 @@ public class CourseService {
 
     @Autowired
     private CourseRepository repository;
+    @Autowired
+    private CourseConverter converter;
 
     public List<CourseEntity> findAll() {
         return repository.findAll();
@@ -25,14 +29,15 @@ public class CourseService {
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public CourseEntity insert(CourseEntity obj) {
-        return repository.save(obj);
+    public CourseEntity insert(CourseRequestDTO objDTO) {
+        CourseEntity entity = converter.forCourseEntity(objDTO);
+        return repository.save(entity);
     }
 
-    public CourseEntity update(String id, CourseEntity obj){
+    public CourseEntity update(String id, CourseRequestDTO objDTO){
         return repository.findById(id)
                 .map(entity -> {
-                    updateData(entity, obj);
+                    updateData(entity, objDTO);
                     return repository.save(entity);
                 })
                 .orElseThrow(()-> new ResourceNotFoundException(id));
@@ -48,9 +53,9 @@ public class CourseService {
         }
     }
 
-    private void updateData(CourseEntity entity, CourseEntity obj){
-        entity.setTypeCourse(obj.getTypeCourse());
-        entity.setTitle(obj.getTitle());
-        entity.setDescription(obj.getDescription());
+    private void updateData(CourseEntity entity, CourseRequestDTO objDTO){
+        entity.setTypeCourse(objDTO.getTypeCourse());
+        entity.setTitle(objDTO.getTitle());
+        entity.setDescription(objDTO.getDescription());
     }
 }

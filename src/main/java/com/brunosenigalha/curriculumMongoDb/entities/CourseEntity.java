@@ -14,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class CourseEntity implements Serializable {
 
     @Id
@@ -22,6 +23,4 @@ public class CourseEntity implements Serializable {
     private TypeCourse typeCourse;
     private String title;
     private String description;
-
-
 }

@@ -9,10 +9,9 @@ import lombok.*;
 @Builder
 @EqualsAndHashCode
 public class AddressRequestDTO {
-       private String id;
-       private String zipCode;
-       private String state;
-       private String city;
-       private String country;
-
+    private String id;
+    private String zipCode;
+    private String state;
+    private String city;
+    private String country;
 }
