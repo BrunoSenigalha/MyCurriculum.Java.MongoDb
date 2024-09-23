@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class ConverterData {
+public class CurriculumConverter {
 
     public CurriculumEntity forCurriculumEntity(CurriculumRequestDTO objDTO) {
         return CurriculumEntity.builder()

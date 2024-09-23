@@ -1,5 +1,7 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
+import com.brunosenigalha.curriculumMongoDb.converters.AcademicExpConverter;
+import com.brunosenigalha.curriculumMongoDb.dto.request.AcademicExpRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.AcademicExpRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
@@ -17,6 +19,8 @@ public class AcademicExpService {
 
     @Autowired
     private AcademicExpRepository repository;
+    @Autowired
+    private AcademicExpConverter converter;
 
     public List<AcademicExpEntity> findAll() {
         return repository.findAll();
@@ -27,21 +31,22 @@ public class AcademicExpService {
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public AcademicExpEntity insert(AcademicExpEntity obj) {
+    public AcademicExpEntity insert(AcademicExpRequestDTO objDTO) {
         try {
-            DataValidation.dataValidationWithoutLimit(obj.getStartDate(), obj.getEndDate());
-            return repository.save(obj);
+            DataValidation.dataValidationForAcademicExp(objDTO.getStartDate(), objDTO.getEndDate());
+            AcademicExpEntity entity = converter.forAcademicExpEntity(objDTO);
+            return repository.save(entity);
         } catch (IllegalArgumentException e) {
             throw new InvalidDateException(e.getMessage());
         }
     }
 
-    public AcademicExpEntity update(String id, AcademicExpEntity obj) {
+    public AcademicExpEntity update(String id, AcademicExpRequestDTO objDTO) {
         AcademicExpEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         try {
-            DataValidation.dataValidationWithoutLimit(obj.getStartDate(), obj.getEndDate());
-            updateData(entity, obj);
+            DataValidation.dataValidationForAcademicExp(objDTO.getStartDate(), objDTO.getEndDate());
+            updateData(entity, objDTO);
             return repository.save(entity);
         } catch (IllegalArgumentException e) {
             throw new InvalidDateException(e.getMessage());
@@ -58,14 +63,14 @@ public class AcademicExpService {
         }
     }
 
-    private void updateData(AcademicExpEntity entity, AcademicExpEntity obj) {
-        entity.setCourseName(obj.getCourseName());
-        entity.setInstitution(obj.getInstitution());
-        entity.setDegree(obj.getDegree());
-        entity.setFormationType(obj.getFormationType());
-        entity.setFormationStatus(obj.getFormationStatus());
-        entity.setStudying(obj.getStudying());
-        entity.setStartDate(obj.getStartDate());
-        entity.setEndDate(obj.getEndDate());
+    private void updateData(AcademicExpEntity entity, AcademicExpRequestDTO objDTO) {
+        entity.setCourseName(objDTO.getCourseName());
+        entity.setInstitution(objDTO.getInstitution());
+        entity.setDegree(objDTO.getDegree());
+        entity.setFormationType(objDTO.getFormationType());
+        entity.setFormationStatus(objDTO.getFormationStatus());
+        entity.setStudying(objDTO.getStudying());
+        entity.setStartDate(objDTO.getStartDate());
+        entity.setEndDate(objDTO.getEndDate());
     }
 }

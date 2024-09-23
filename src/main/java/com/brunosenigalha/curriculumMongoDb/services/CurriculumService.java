@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
-import com.brunosenigalha.curriculumMongoDb.converters.ConverterData;
+import com.brunosenigalha.curriculumMongoDb.converters.CurriculumConverter;
 import com.brunosenigalha.curriculumMongoDb.converters.CurriculumMapper;
 import com.brunosenigalha.curriculumMongoDb.dto.request.CurriculumRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.dto.response.CurriculumResponseDTO;
@@ -23,7 +23,7 @@ public class CurriculumService {
     @Autowired
     private CurriculumRepository repository;
     @Autowired
-    private ConverterData converterData;
+    private CurriculumConverter converterData;
     @Autowired
     private AddressService addressService;
     @Autowired

@@ -16,7 +16,7 @@ public class DataValidation {
         }
     }
 
-    public static void dataValidationWithoutLimit(LocalDate startDate, LocalDate endDate){
+    public static void dataValidationForAcademicExp(LocalDate startDate, LocalDate endDate){
         if (startDate.isAfter(endDate)) {
             throw new IllegalArgumentException("Start date can't be after end date");
         }

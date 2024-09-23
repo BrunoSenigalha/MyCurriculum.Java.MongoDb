@@ -1,26 +1,20 @@
-package com.brunosenigalha.curriculumMongoDb.entities;
+package com.brunosenigalha.curriculumMongoDb.dto.request;
+
 
 import com.brunosenigalha.curriculumMongoDb.entities.enums.Degree;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.FormationStatus;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.FormationType;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
-@Document(collection = "academic_experiences")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
-public class AcademicExpEntity implements Serializable {
-
-    @Id
-    private String id;
+@EqualsAndHashCode
+public class AcademicExpRequestDTO {
     private String curriculumId;
     private String courseName;
     private String institution;
@@ -30,5 +24,4 @@ public class AcademicExpEntity implements Serializable {
     private Boolean studying;
     private LocalDate startDate;
     private LocalDate endDate;
-
 }

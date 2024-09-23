@@ -18,6 +18,7 @@ public class CourseEntity implements Serializable {
 
     @Id
     private String id;
+    private String curriculumId;
     private TypeCourse typeCourse;
     private String title;
     private String description;

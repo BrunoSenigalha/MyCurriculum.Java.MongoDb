@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
-import com.brunosenigalha.curriculumMongoDb.converters.ConverterData;
+import com.brunosenigalha.curriculumMongoDb.converters.CurriculumConverter;
 import com.brunosenigalha.curriculumMongoDb.dto.request.CurriculumRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.dto.response.CurriculumResponseDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
@@ -20,7 +20,7 @@ public class CurriculumResource {
     private CurriculumService curriculumService;
 
     @Autowired
-    private ConverterData converterData;
+    private CurriculumConverter converterData;
 
     @GetMapping
     public ResponseEntity<List<CurriculumResponseDTO>> findAll() {

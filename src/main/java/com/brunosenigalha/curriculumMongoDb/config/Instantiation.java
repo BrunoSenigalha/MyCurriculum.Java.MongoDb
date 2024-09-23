@@ -49,14 +49,14 @@ public class Instantiation implements CommandLineRunner {
                 "Product Manager", "87777777", "maria@gmail.com", "www.linkedin.com/maria");
 
 
-        CourseEntity course1 = new CourseEntity(null, TypeCourse.CURSO, "Java", "Curso completo de Java");
-        CourseEntity course2 = new CourseEntity(null, TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
-        CourseEntity course3 = new CourseEntity(null, TypeCourse.CURSO, "MongoDB", "Curso completo de MongoDB");
-        CourseEntity course4 = new CourseEntity(null, TypeCourse.CURSO, ".NET", "Curso completo de .NET");
+        CourseEntity course1 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CURSO, "Java", "Curso completo de Java");
+        CourseEntity course2 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
+        CourseEntity course3 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CURSO, "MongoDB", "Curso completo de MongoDB");
+        CourseEntity course4 = new CourseEntity(UUID.randomUUID().toString(),c2.getId() ,TypeCourse.CURSO, ".NET", "Curso completo de .NET");
         courseRepository.saveAll(Arrays.asList(course1, course2, course3, course4));
 
-        AcademicExpEntity aExp1 = new AcademicExpEntity(null, "Analise de Sistemas", "PUC", Degree.GRADUACAO, FormationType.SUPERIOR, FormationStatus.COMPLETO, false, LocalDate.parse("21/03/2020", fmt), LocalDate.parse("25/04/2024", fmt));
-        AcademicExpEntity aExp2 = new AcademicExpEntity(null, "Engenharia de Alimentos", "Unesp", Degree.MESTRADO, FormationType.SUPERIOR, FormationStatus.EM_ANDAMENTO, false, LocalDate.parse("24/08/2023", fmt), LocalDate.parse("12/01/2026", fmt));
+        AcademicExpEntity aExp1 = new AcademicExpEntity(UUID.randomUUID().toString(), c1.getId(), "Analise de Sistemas", "PUC", Degree.GRADUACAO, FormationType.SUPERIOR, FormationStatus.COMPLETO, false, LocalDate.parse("21/03/2020", fmt), LocalDate.parse("25/04/2024", fmt));
+        AcademicExpEntity aExp2 = new AcademicExpEntity(UUID.randomUUID().toString(), c1.getId(), "Engenharia de Alimentos", "Unesp", Degree.MESTRADO, FormationType.SUPERIOR, FormationStatus.EM_ANDAMENTO, false, LocalDate.parse("24/08/2023", fmt), LocalDate.parse("12/01/2026", fmt));
         academicExpRepository.saveAll(Arrays.asList(aExp1, aExp2));
 
         c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));
@@ -67,7 +67,7 @@ public class Instantiation implements CommandLineRunner {
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
 
         AddressEntity addr1 = new AddressEntity(UUID.randomUUID().toString(), c1.getId(), "8566698", "São Paulo", "São Paulo", "Brasil");
-        AddressEntity addr2 = new AddressEntity(UUID.randomUUID().toString(),c2.getId(), "898222", "Minas Gerais", "Montes Claros", "Brasil");
+        AddressEntity addr2 = new AddressEntity(UUID.randomUUID().toString(), c2.getId(), "898222", "Minas Gerais", "Montes Claros", "Brasil");
         addressRepository.saveAll(Arrays.asList(addr1, addr2));
 
         c1.setAddress(addr1);

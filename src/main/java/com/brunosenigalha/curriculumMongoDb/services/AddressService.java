@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
-import com.brunosenigalha.curriculumMongoDb.converters.ConverterData;
+import com.brunosenigalha.curriculumMongoDb.converters.CurriculumConverter;
 import com.brunosenigalha.curriculumMongoDb.dto.request.AddressRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.AddressRepository;
@@ -16,7 +16,7 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
-    private ConverterData converterData;
+    private CurriculumConverter converterData;
 
     public AddressEntity insertAddress(AddressEntity addressEntity) {
         return addressRepository.save(addressEntity);

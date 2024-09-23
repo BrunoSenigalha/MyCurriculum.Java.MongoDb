@@ -1,5 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
+import com.brunosenigalha.curriculumMongoDb.dto.request.AcademicExpRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
 import com.brunosenigalha.curriculumMongoDb.services.AcademicExpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +30,15 @@ public class AcademicExpResource {
     }
 
     @PostMapping
-    public ResponseEntity<AcademicExpEntity> insert(@RequestBody AcademicExpEntity obj) {
-        obj = service.insert(obj);
-        return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+    public ResponseEntity<AcademicExpEntity> insert(@RequestBody AcademicExpRequestDTO objDTO) {
+        AcademicExpEntity entity = service.insert(objDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AcademicExpEntity> update(@PathVariable String id, @RequestBody AcademicExpEntity obj) {
-        obj = service.update(id, obj);
-        return ResponseEntity.ok(obj);
+    public ResponseEntity<AcademicExpEntity> update(@PathVariable String id, @RequestBody AcademicExpRequestDTO objDTO) {
+        AcademicExpEntity entity = service.update(id, objDTO);
+        return ResponseEntity.ok(entity);
     }
 
     @DeleteMapping(value = "/{id}")
