@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class CurriculumEntity implements Serializable {
 
     @Id
@@ -32,10 +33,10 @@ public class CurriculumEntity implements Serializable {
     private AddressEntity address;
 
     @DBRef(lazy = true)
-    private List<Course> courses = new ArrayList<>();
+    private List<CourseEntity> courses = new ArrayList<>();
 
     @DBRef(lazy = true)
-    private List<AcademicExp> academicExpList = new ArrayList<>();
+    private List<AcademicExpEntity> academicExpList = new ArrayList<>();
 
     public CurriculumEntity(String id, String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn) {
         this.id = id;

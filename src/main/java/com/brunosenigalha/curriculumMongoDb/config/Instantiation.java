@@ -1,8 +1,8 @@
 package com.brunosenigalha.curriculumMongoDb.config;
 
-import com.brunosenigalha.curriculumMongoDb.entities.AcademicExp;
+import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
-import com.brunosenigalha.curriculumMongoDb.entities.Course;
+import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.*;
 import com.brunosenigalha.curriculumMongoDb.repositories.AcademicExpRepository;
@@ -49,14 +49,14 @@ public class Instantiation implements CommandLineRunner {
                 "Product Manager", "87777777", "maria@gmail.com", "www.linkedin.com/maria");
 
 
-        Course course1 = new Course(null, TypeCourse.CURSO, "Java", "Curso completo de Java");
-        Course course2 = new Course(null, TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
-        Course course3 = new Course(null, TypeCourse.CURSO, "MongoDB", "Curso completo de MongoDB");
-        Course course4 = new Course(null, TypeCourse.CURSO, ".NET", "Curso completo de .NET");
+        CourseEntity course1 = new CourseEntity(null, TypeCourse.CURSO, "Java", "Curso completo de Java");
+        CourseEntity course2 = new CourseEntity(null, TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
+        CourseEntity course3 = new CourseEntity(null, TypeCourse.CURSO, "MongoDB", "Curso completo de MongoDB");
+        CourseEntity course4 = new CourseEntity(null, TypeCourse.CURSO, ".NET", "Curso completo de .NET");
         courseRepository.saveAll(Arrays.asList(course1, course2, course3, course4));
 
-        AcademicExp aExp1 = new AcademicExp(null, "Analise de Sistemas", "PUC", Degree.GRADUACAO, FormationType.SUPERIOR, FormationStatus.COMPLETO, false, LocalDate.parse("21/03/2020", fmt), LocalDate.parse("25/04/2024", fmt));
-        AcademicExp aExp2 = new AcademicExp(null, "Engenharia de Alimentos", "Unesp", Degree.MESTRADO, FormationType.SUPERIOR, FormationStatus.EM_ANDAMENTO, false, LocalDate.parse("24/08/2023", fmt), LocalDate.parse("12/01/2026", fmt));
+        AcademicExpEntity aExp1 = new AcademicExpEntity(null, "Analise de Sistemas", "PUC", Degree.GRADUACAO, FormationType.SUPERIOR, FormationStatus.COMPLETO, false, LocalDate.parse("21/03/2020", fmt), LocalDate.parse("25/04/2024", fmt));
+        AcademicExpEntity aExp2 = new AcademicExpEntity(null, "Engenharia de Alimentos", "Unesp", Degree.MESTRADO, FormationType.SUPERIOR, FormationStatus.EM_ANDAMENTO, false, LocalDate.parse("24/08/2023", fmt), LocalDate.parse("12/01/2026", fmt));
         academicExpRepository.saveAll(Arrays.asList(aExp1, aExp2));
 
         c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));

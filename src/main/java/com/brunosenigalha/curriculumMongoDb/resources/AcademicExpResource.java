@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
-import com.brunosenigalha.curriculumMongoDb.entities.AcademicExp;
+import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
 import com.brunosenigalha.curriculumMongoDb.services.AcademicExpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,25 +17,25 @@ public class AcademicExpResource {
     public AcademicExpService service;
 
     @GetMapping
-    public ResponseEntity<List<AcademicExp>> findAll() {
-        List<AcademicExp> list = service.findAll();
+    public ResponseEntity<List<AcademicExpEntity>> findAll() {
+        List<AcademicExpEntity> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AcademicExp> findById(@PathVariable String id) {
-        AcademicExp obj = service.findById(id);
+    public ResponseEntity<AcademicExpEntity> findById(@PathVariable String id) {
+        AcademicExpEntity obj = service.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @PostMapping
-    public ResponseEntity<AcademicExp> insert(@RequestBody AcademicExp obj) {
+    public ResponseEntity<AcademicExpEntity> insert(@RequestBody AcademicExpEntity obj) {
         obj = service.insert(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AcademicExp> update(@PathVariable String id, @RequestBody AcademicExp obj) {
+    public ResponseEntity<AcademicExpEntity> update(@PathVariable String id, @RequestBody AcademicExpEntity obj) {
         obj = service.update(id, obj);
         return ResponseEntity.ok(obj);
     }

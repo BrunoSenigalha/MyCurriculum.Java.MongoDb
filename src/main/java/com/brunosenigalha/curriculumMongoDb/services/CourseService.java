@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
-import com.brunosenigalha.curriculumMongoDb.entities.Course;
+import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.CourseRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.ResourceNotFoundException;
@@ -16,20 +16,20 @@ public class CourseService {
     @Autowired
     private CourseRepository repository;
 
-    public List<Course> findAll() {
+    public List<CourseEntity> findAll() {
         return repository.findAll();
     }
 
-    public Course findById(String id) {
+    public CourseEntity findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Course insert(Course obj) {
+    public CourseEntity insert(CourseEntity obj) {
         return repository.save(obj);
     }
 
-    public Course update(String id, Course obj){
+    public CourseEntity update(String id, CourseEntity obj){
         return repository.findById(id)
                 .map(entity -> {
                     updateData(entity, obj);
@@ -39,7 +39,7 @@ public class CourseService {
     }
 
     public void delete(String id){
-        Course entity = repository.findById(id)
+        CourseEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         try{
             repository.delete(entity);
@@ -48,7 +48,7 @@ public class CourseService {
         }
     }
 
-    private void updateData(Course entity, Course obj){
+    private void updateData(CourseEntity entity, CourseEntity obj){
         entity.setTypeCourse(obj.getTypeCourse());
         entity.setTitle(obj.getTitle());
         entity.setDescription(obj.getDescription());

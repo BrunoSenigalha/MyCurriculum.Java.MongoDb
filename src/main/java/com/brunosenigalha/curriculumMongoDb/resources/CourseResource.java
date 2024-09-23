@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.resources;
 
-import com.brunosenigalha.curriculumMongoDb.entities.Course;
+import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
 import com.brunosenigalha.curriculumMongoDb.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,26 +17,26 @@ public class CourseResource {
     public CourseService service;
 
     @GetMapping
-    public ResponseEntity<List<Course>> findAll() {
-        List<Course> list = service.findAll();
+    public ResponseEntity<List<CourseEntity>> findAll() {
+        List<CourseEntity> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Course> findById(@PathVariable String id) {
-        Course obj = service.findById(id);
+    public ResponseEntity<CourseEntity> findById(@PathVariable String id) {
+        CourseEntity obj = service.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @PostMapping
-    public ResponseEntity<Course> insert(@RequestBody Course obj) {
+    public ResponseEntity<CourseEntity> insert(@RequestBody CourseEntity obj) {
         obj = service.insert(obj);
         return ResponseEntity.status(HttpStatus.CREATED).body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Course> update(@PathVariable String id, @RequestBody Course obj){
-        Course entity = service.update(id, obj);
+    public ResponseEntity<CourseEntity> update(@PathVariable String id, @RequestBody CourseEntity obj){
+        CourseEntity entity = service.update(id, obj);
         return ResponseEntity.ok(entity);
     }
 

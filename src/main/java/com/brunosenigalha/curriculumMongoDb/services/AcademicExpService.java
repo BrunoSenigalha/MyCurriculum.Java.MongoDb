@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.services;
 
-import com.brunosenigalha.curriculumMongoDb.entities.AcademicExp;
+import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.AcademicExpRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.InvalidDateException;
@@ -18,16 +18,16 @@ public class AcademicExpService {
     @Autowired
     private AcademicExpRepository repository;
 
-    public List<AcademicExp> findAll() {
+    public List<AcademicExpEntity> findAll() {
         return repository.findAll();
     }
 
-    public AcademicExp findById(String id) {
+    public AcademicExpEntity findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public AcademicExp insert(AcademicExp obj) {
+    public AcademicExpEntity insert(AcademicExpEntity obj) {
         try {
             DataValidation.dataValidationWithoutLimit(obj.getStartDate(), obj.getEndDate());
             return repository.save(obj);
@@ -36,8 +36,8 @@ public class AcademicExpService {
         }
     }
 
-    public AcademicExp update(String id, AcademicExp obj) {
-        AcademicExp entity = repository.findById(id)
+    public AcademicExpEntity update(String id, AcademicExpEntity obj) {
+        AcademicExpEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         try {
             DataValidation.dataValidationWithoutLimit(obj.getStartDate(), obj.getEndDate());
@@ -49,7 +49,7 @@ public class AcademicExpService {
     }
 
     public void delete(String id) {
-        AcademicExp entity = repository.findById(id)
+        AcademicExpEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         try {
             repository.delete(entity);
@@ -58,7 +58,7 @@ public class AcademicExpService {
         }
     }
 
-    private void updateData(AcademicExp entity, AcademicExp obj) {
+    private void updateData(AcademicExpEntity entity, AcademicExpEntity obj) {
         entity.setCourseName(obj.getCourseName());
         entity.setInstitution(obj.getInstitution());
         entity.setDegree(obj.getDegree());
