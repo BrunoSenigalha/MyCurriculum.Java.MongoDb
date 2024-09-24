@@ -3,6 +3,7 @@ package com.brunosenigalha.curriculumMongoDb.services;
 import com.brunosenigalha.curriculumMongoDb.converters.AcademicExpConverter;
 import com.brunosenigalha.curriculumMongoDb.dto.request.AcademicExpRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
+import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.AcademicExpRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.InvalidDateException;
@@ -21,6 +22,9 @@ public class AcademicExpService {
     private AcademicExpRepository repository;
     @Autowired
     private AcademicExpConverter converter;
+    @Autowired
+    private CurriculumService curriculumService;
+
 
     public List<AcademicExpEntity> findAll() {
         return repository.findAll();
@@ -35,9 +39,13 @@ public class AcademicExpService {
         try {
             DataValidation.dataValidationForAcademicExp(objDTO.getStartDate(), objDTO.getEndDate());
             AcademicExpEntity entity = converter.forAcademicExpEntity(objDTO);
+            addAcademicExpToCurriculum(entity);
+
             return repository.save(entity);
         } catch (IllegalArgumentException e) {
             throw new InvalidDateException(e.getMessage());
+        } catch (Exception e) {
+            throw new ResourceNotFoundException(e.getMessage());
         }
     }
 
@@ -62,6 +70,13 @@ public class AcademicExpService {
             throw new DatabaseException(e.getMessage());
         }
     }
+
+    private void addAcademicExpToCurriculum(AcademicExpEntity obj) {
+        CurriculumEntity entity = curriculumService.findById(obj.getCurriculumId());
+        entity.getAcademicExpList().add(obj);
+        curriculumService.saveCurriculum(entity);
+    }
+
 
     private void updateData(AcademicExpEntity entity, AcademicExpRequestDTO objDTO) {
         entity.setCourseName(objDTO.getCourseName());

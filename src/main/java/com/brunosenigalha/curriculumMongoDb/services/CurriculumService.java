@@ -75,6 +75,7 @@ public class CurriculumService {
     }
 
 
+
     public void delete(String id) {
         CurriculumEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -83,6 +84,10 @@ public class CurriculumService {
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+    public void saveCurriculum(CurriculumEntity entity){
+        repository.save(entity);
     }
 
 
