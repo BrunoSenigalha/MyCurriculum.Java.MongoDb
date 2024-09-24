@@ -1,6 +1,6 @@
 package com.brunosenigalha.curriculumMongoDb.entities.enums;
 
-public enum ProficiencyLeve {
+public enum ProficiencyLevel {
     BASICO,
     MEDIO,
     AVANCADO,

@@ -1,14 +1,8 @@
 package com.brunosenigalha.curriculumMongoDb.config;
 
-import com.brunosenigalha.curriculumMongoDb.entities.AcademicExpEntity;
-import com.brunosenigalha.curriculumMongoDb.entities.AddressEntity;
-import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
-import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
+import com.brunosenigalha.curriculumMongoDb.entities.*;
 import com.brunosenigalha.curriculumMongoDb.entities.enums.*;
-import com.brunosenigalha.curriculumMongoDb.repositories.AcademicExpRepository;
-import com.brunosenigalha.curriculumMongoDb.repositories.AddressRepository;
-import com.brunosenigalha.curriculumMongoDb.repositories.CourseRepository;
-import com.brunosenigalha.curriculumMongoDb.repositories.CurriculumRepository;
+import com.brunosenigalha.curriculumMongoDb.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,8 @@ public class Instantiation implements CommandLineRunner {
 
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private LanguageRepository languageRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -40,6 +36,7 @@ public class Instantiation implements CommandLineRunner {
         courseRepository.deleteAll();
         academicExpRepository.deleteAll();
         addressRepository.deleteAll();
+        languageRepository.deleteAll();
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -47,7 +44,6 @@ public class Instantiation implements CommandLineRunner {
                 "Desenvolvedor de Sistemas", "85555855", "joao@gmail.com", "www.linkedin.com/joao");
         CurriculumEntity c2 = new CurriculumEntity(UUID.randomUUID().toString(), " ", "Maria", Gender.FEMININO,
                 "Product Manager", "87777777", "maria@gmail.com", "www.linkedin.com/maria");
-
 
         CourseEntity course1 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CURSO, "Java", "Curso completo de Java");
         CourseEntity course2 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
@@ -59,10 +55,17 @@ public class Instantiation implements CommandLineRunner {
         AcademicExpEntity aExp2 = new AcademicExpEntity(UUID.randomUUID().toString(), c1.getId(), "Engenharia de Alimentos", "Unesp", Degree.MESTRADO, FormationType.SUPERIOR, FormationStatus.EM_ANDAMENTO, false, LocalDate.parse("24/08/2023", fmt), LocalDate.parse("12/01/2026", fmt));
         academicExpRepository.saveAll(Arrays.asList(aExp1, aExp2));
 
-        c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));
+        LanguageEntity l1 = new LanguageEntity(UUID.randomUUID().toString(), c2.getId(), "Inglês", ProficiencyLevel.AVANCADO, ProficiencyLevel.MEDIO, ProficiencyLevel.AVANCADO);
+        LanguageEntity l2 = new LanguageEntity(UUID.randomUUID().toString(), c2.getId(), "Espanhol", ProficiencyLevel.BASICO, ProficiencyLevel.MEDIO, ProficiencyLevel.BASICO);
+        LanguageEntity l3 = new LanguageEntity(UUID.randomUUID().toString(), c2.getId(), "Inglês", ProficiencyLevel.MEDIO, ProficiencyLevel.AVANCADO, ProficiencyLevel.MEDIO);
+        languageRepository.saveAll(Arrays.asList(l1, l2, l3));
 
+        c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));
         c1.getCourses().addAll(Arrays.asList(course1, course2, course3));
+        c1.getLanguages().add(l1);
         c2.getCourses().add(course4);
+        c2.getLanguages().addAll(Arrays.asList(l2, l3));
+
 
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
 
