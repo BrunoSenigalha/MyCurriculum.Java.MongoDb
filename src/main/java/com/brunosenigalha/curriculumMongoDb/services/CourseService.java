@@ -3,6 +3,7 @@ package com.brunosenigalha.curriculumMongoDb.services;
 import com.brunosenigalha.curriculumMongoDb.converters.CourseConverter;
 import com.brunosenigalha.curriculumMongoDb.dto.request.CourseRequestDTO;
 import com.brunosenigalha.curriculumMongoDb.entities.CourseEntity;
+import com.brunosenigalha.curriculumMongoDb.entities.CurriculumEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.CourseRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.ResourceNotFoundException;
@@ -19,6 +20,8 @@ public class CourseService {
     private CourseRepository repository;
     @Autowired
     private CourseConverter converter;
+    @Autowired
+    private CurriculumService curriculumService;
 
     public List<CourseEntity> findAll() {
         return repository.findAll();
@@ -31,29 +34,36 @@ public class CourseService {
 
     public CourseEntity insert(CourseRequestDTO objDTO) {
         CourseEntity entity = converter.forCourseEntity(objDTO);
+        addCourseToCurriculum(entity);
         return repository.save(entity);
     }
 
-    public CourseEntity update(String id, CourseRequestDTO objDTO){
+    public CourseEntity update(String id, CourseRequestDTO objDTO) {
         return repository.findById(id)
                 .map(entity -> {
                     updateData(entity, objDTO);
                     return repository.save(entity);
                 })
-                .orElseThrow(()-> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public void delete(String id){
+    public void delete(String id) {
         CourseEntity entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
-        try{
+        try {
             repository.delete(entity);
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
 
-    private void updateData(CourseEntity entity, CourseRequestDTO objDTO){
+    private void addCourseToCurriculum(CourseEntity obj) {
+        CurriculumEntity entity = curriculumService.findById(obj.getCurriculumId());
+        entity.getCourses().add(obj);
+        curriculumService.saveCurriculum(entity);
+    }
+
+    private void updateData(CourseEntity entity, CourseRequestDTO objDTO) {
         entity.setTypeCourse(objDTO.getTypeCourse());
         entity.setTitle(objDTO.getTitle());
         entity.setDescription(objDTO.getDescription());

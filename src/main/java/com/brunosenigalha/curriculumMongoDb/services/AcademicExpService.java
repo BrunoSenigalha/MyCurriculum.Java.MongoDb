@@ -44,8 +44,6 @@ public class AcademicExpService {
             return repository.save(entity);
         } catch (IllegalArgumentException e) {
             throw new InvalidDateException(e.getMessage());
-        } catch (Exception e) {
-            throw new ResourceNotFoundException(e.getMessage());
         }
     }
 
