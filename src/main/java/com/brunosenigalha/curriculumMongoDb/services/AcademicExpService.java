@@ -75,7 +75,6 @@ public class AcademicExpService {
         curriculumService.saveCurriculum(entity);
     }
 
-
     private void updateData(AcademicExpEntity entity, AcademicExpRequestDTO objDTO) {
         entity.setCourseName(objDTO.getCourseName());
         entity.setInstitution(objDTO.getInstitution());

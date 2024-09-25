@@ -33,6 +33,12 @@ public class Instantiation implements CommandLineRunner {
     @Autowired
     private LinkRepository linkRepository;
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private ToolRepository toolRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -42,6 +48,8 @@ public class Instantiation implements CommandLineRunner {
         addressRepository.deleteAll();
         languageRepository.deleteAll();
         linkRepository.deleteAll();
+        projectRepository.deleteAll();
+        toolRepository.deleteAll();
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -72,13 +80,36 @@ public class Instantiation implements CommandLineRunner {
         LinkEntity link5 = new LinkEntity(UUID.randomUUID().toString(), c2.getId(), "www.links.com.br");
         linkRepository.saveAll(Arrays.asList(link1, link2, link3, link4, link5));
 
+        ToolEntity tool1 = new ToolEntity(UUID.randomUUID().toString(), "Java");
+        ToolEntity tool2 = new ToolEntity(UUID.randomUUID().toString(), "MongoDB");
+        ToolEntity tool3 = new ToolEntity(UUID.randomUUID().toString(), "Entity Framework");
+        ToolEntity tool4 = new ToolEntity(UUID.randomUUID().toString(), "RabbitMQ");
+        ToolEntity tool5 = new ToolEntity(UUID.randomUUID().toString(), ".NET");
+        toolRepository.saveAll(Arrays.asList(tool1, tool2, tool3, tool4, tool5));
+
+        ProjectEntity proj1 = new ProjectEntity(UUID.randomUUID().toString(), c1.getId(), "E-Commerce", "www.github.com", "Projeto para e-commerce online");
+        ProjectEntity proj2 = new ProjectEntity(UUID.randomUUID().toString(), c1.getId(), "Banco Online", "www.github.com", "Projeto para criar banco online");
+        ProjectEntity proj3 = new ProjectEntity(UUID.randomUUID().toString(), c2.getId(), "Curriculum Online", "www.github.com", "Cadastro de currículo independente de plataforma");
+        ProjectEntity proj4 = new ProjectEntity(UUID.randomUUID().toString(), c2.getId(), "Posto de Gasolina", "www.github.com", "Gerenciamento de posto de gasolina.");
+        projectRepository.saveAll(Arrays.asList(proj1, proj2, proj3, proj4));
+        proj1.getTools().addAll(Arrays.asList(tool1, tool2));
+        proj2.getTools().addAll(Arrays.asList(tool1, tool3, tool4));
+        proj3.getTools().addAll(Arrays.asList(tool2, tool5));
+        proj4.getTools().addAll(Arrays.asList(tool1, tool2, tool3));
+
+
         c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));
         c1.getCourses().addAll(Arrays.asList(course1, course2, course3));
         c1.getLanguages().add(l1);
         c1.getLinks().addAll(Arrays.asList(link1, link2));
+        c1.getProjects().addAll(Arrays.asList(proj1, proj2));
+        c1.getTools().addAll(Arrays.asList(tool1, tool2, tool3, tool4));
+
         c2.getCourses().add(course4);
         c2.getLanguages().addAll(Arrays.asList(l2, l3));
         c2.getLinks().addAll(Arrays.asList(link3, link4, link5));
+        c2.getProjects().addAll(Arrays.asList(proj3, proj4));
+        c2.getTools().addAll(Arrays.asList(tool2, tool5, tool1, tool3));
 
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
 

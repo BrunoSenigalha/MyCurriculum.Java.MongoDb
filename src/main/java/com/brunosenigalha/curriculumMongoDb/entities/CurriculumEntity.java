@@ -44,6 +44,12 @@ public class CurriculumEntity implements Serializable {
     @DBRef(lazy = true)
     private List<LinkEntity> links = new ArrayList<>();
 
+    @DBRef(lazy = true)
+    private List<ProjectEntity> projects = new ArrayList<>();
+
+    @DBRef(lazy = true)
+    private List<ToolEntity> tools = new ArrayList<>();
+
     public CurriculumEntity(String id, String picture, String name, Gender gender, String professionalGoals, String phone, String email, String linkedIn) {
         this.id = id;
         this.picture = picture;
@@ -54,5 +60,4 @@ public class CurriculumEntity implements Serializable {
         this.email = email;
         this.linkedIn = linkedIn;
     }
-
 }
