@@ -26,8 +26,12 @@ public class Instantiation implements CommandLineRunner {
 
     @Autowired
     private AddressRepository addressRepository;
+
     @Autowired
     private LanguageRepository languageRepository;
+
+    @Autowired
+    private LinkRepository linkRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,6 +41,7 @@ public class Instantiation implements CommandLineRunner {
         academicExpRepository.deleteAll();
         addressRepository.deleteAll();
         languageRepository.deleteAll();
+        linkRepository.deleteAll();
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -45,10 +50,10 @@ public class Instantiation implements CommandLineRunner {
         CurriculumEntity c2 = new CurriculumEntity(UUID.randomUUID().toString(), " ", "Maria", Gender.FEMININO,
                 "Product Manager", "87777777", "maria@gmail.com", "www.linkedin.com/maria");
 
-        CourseEntity course1 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CURSO, "Java", "Curso completo de Java");
-        CourseEntity course2 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
-        CourseEntity course3 = new CourseEntity(UUID.randomUUID().toString(),c1.getId() ,TypeCourse.CURSO, "MongoDB", "Curso completo de MongoDB");
-        CourseEntity course4 = new CourseEntity(UUID.randomUUID().toString(),c2.getId() ,TypeCourse.CURSO, ".NET", "Curso completo de .NET");
+        CourseEntity course1 = new CourseEntity(UUID.randomUUID().toString(), c1.getId(), TypeCourse.CURSO, "Java", "Curso completo de Java");
+        CourseEntity course2 = new CourseEntity(UUID.randomUUID().toString(), c1.getId(), TypeCourse.CERTIFICACAO, "AWS", "Certificação de AWS");
+        CourseEntity course3 = new CourseEntity(UUID.randomUUID().toString(), c1.getId(), TypeCourse.CURSO, "MongoDB", "Curso completo de MongoDB");
+        CourseEntity course4 = new CourseEntity(UUID.randomUUID().toString(), c2.getId(), TypeCourse.CURSO, ".NET", "Curso completo de .NET");
         courseRepository.saveAll(Arrays.asList(course1, course2, course3, course4));
 
         AcademicExpEntity aExp1 = new AcademicExpEntity(UUID.randomUUID().toString(), c1.getId(), "Analise de Sistemas", "PUC", Degree.GRADUACAO, FormationType.SUPERIOR, FormationStatus.COMPLETO, false, LocalDate.parse("21/03/2020", fmt), LocalDate.parse("25/04/2024", fmt));
@@ -60,12 +65,20 @@ public class Instantiation implements CommandLineRunner {
         LanguageEntity l3 = new LanguageEntity(UUID.randomUUID().toString(), c2.getId(), "Inglês", ProficiencyLevel.MEDIO, ProficiencyLevel.AVANCADO, ProficiencyLevel.MEDIO);
         languageRepository.saveAll(Arrays.asList(l1, l2, l3));
 
+        LinkEntity link1 = new LinkEntity(UUID.randomUUID().toString(), c1.getId(), "www.aprender.com.br");
+        LinkEntity link2 = new LinkEntity(UUID.randomUUID().toString(), c1.getId(), "www.github.com.br");
+        LinkEntity link3 = new LinkEntity(UUID.randomUUID().toString(), c2.getId(), "www.portifolionline.com.br");
+        LinkEntity link4 = new LinkEntity(UUID.randomUUID().toString(), c2.getId(), "www.marketplace.com");
+        LinkEntity link5 = new LinkEntity(UUID.randomUUID().toString(), c2.getId(), "www.links.com.br");
+        linkRepository.saveAll(Arrays.asList(link1, link2, link3, link4, link5));
+
         c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));
         c1.getCourses().addAll(Arrays.asList(course1, course2, course3));
         c1.getLanguages().add(l1);
+        c1.getLinks().addAll(Arrays.asList(link1, link2));
         c2.getCourses().add(course4);
         c2.getLanguages().addAll(Arrays.asList(l2, l3));
-
+        c2.getLinks().addAll(Arrays.asList(link3, link4, link5));
 
         curriculumRepository.saveAll(Arrays.asList(c1, c2));
 
