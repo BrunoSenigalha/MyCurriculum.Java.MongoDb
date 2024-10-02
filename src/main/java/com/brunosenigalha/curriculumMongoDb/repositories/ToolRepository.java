@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ToolRepository extends MongoRepository<ToolEntity, String> {
+
+    ToolEntity findByNameIgnoreCase(String name);
 }

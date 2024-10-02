@@ -80,7 +80,7 @@ public class Instantiation implements CommandLineRunner {
         LinkEntity link5 = new LinkEntity(UUID.randomUUID().toString(), c2.getId(), "www.links.com.br");
         linkRepository.saveAll(Arrays.asList(link1, link2, link3, link4, link5));
 
-        ToolEntity tool1 = new ToolEntity(UUID.randomUUID().toString(), "Java");
+        ToolEntity tool1 = new ToolEntity(UUID.randomUUID().toString(),  "Java");
         ToolEntity tool2 = new ToolEntity(UUID.randomUUID().toString(), "MongoDB");
         ToolEntity tool3 = new ToolEntity(UUID.randomUUID().toString(), "Entity Framework");
         ToolEntity tool4 = new ToolEntity(UUID.randomUUID().toString(), "RabbitMQ");
@@ -91,12 +91,11 @@ public class Instantiation implements CommandLineRunner {
         ProjectEntity proj2 = new ProjectEntity(UUID.randomUUID().toString(), c1.getId(), "Banco Online", "www.github.com", "Projeto para criar banco online");
         ProjectEntity proj3 = new ProjectEntity(UUID.randomUUID().toString(), c2.getId(), "Curriculum Online", "www.github.com", "Cadastro de currículo independente de plataforma");
         ProjectEntity proj4 = new ProjectEntity(UUID.randomUUID().toString(), c2.getId(), "Posto de Gasolina", "www.github.com", "Gerenciamento de posto de gasolina.");
-        projectRepository.saveAll(Arrays.asList(proj1, proj2, proj3, proj4));
         proj1.getTools().addAll(Arrays.asList(tool1, tool2));
         proj2.getTools().addAll(Arrays.asList(tool1, tool3, tool4));
         proj3.getTools().addAll(Arrays.asList(tool2, tool5));
         proj4.getTools().addAll(Arrays.asList(tool1, tool2, tool3));
-
+        projectRepository.saveAll(Arrays.asList(proj1, proj2, proj3, proj4));
 
         c1.getAcademicExpList().addAll(Arrays.asList(aExp1, aExp2));
         c1.getCourses().addAll(Arrays.asList(course1, course2, course3));

@@ -27,7 +27,7 @@ public class ProjectConverter {
     public ToolEntity forToolEntity(ToolRequestDTO objDTO){
         return ToolEntity.builder()
                 .id(UUID.randomUUID().toString())
-                .tool(objDTO.getTool())
+                .name(objDTO.getName())
                 .build();
     }
 }

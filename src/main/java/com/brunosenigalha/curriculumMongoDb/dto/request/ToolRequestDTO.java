@@ -10,5 +10,6 @@ import lombok.*;
 @EqualsAndHashCode
 public class ToolRequestDTO {
 
-    private String tool;
+    private String curriculumId;
+    private String name;
 }
