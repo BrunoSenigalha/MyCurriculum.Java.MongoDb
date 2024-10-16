@@ -35,10 +35,15 @@ public class ToolResource {
         return ResponseEntity.ok(entity);
     }
 
-    @PostMapping
-    private ResponseEntity<ToolEntity> insert(@RequestBody ToolRequestDTO objDTO) {
-        ToolEntity entity = service.insert(objDTO);
+    @PostMapping(value = "/{id}")
+    private ResponseEntity<ToolEntity> insert(@PathVariable String id, @RequestBody ToolRequestDTO objDTO) {
+        ToolEntity entity = service.insert(id, objDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(entity);
     }
 
+    @DeleteMapping(value = "/{id}")
+    private ResponseEntity<Void> delete(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
