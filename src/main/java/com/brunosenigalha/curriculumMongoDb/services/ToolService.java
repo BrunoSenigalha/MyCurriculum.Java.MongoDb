@@ -7,7 +7,7 @@ import com.brunosenigalha.curriculumMongoDb.entities.ToolEntity;
 import com.brunosenigalha.curriculumMongoDb.repositories.ToolRepository;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.DatabaseException;
 import com.brunosenigalha.curriculumMongoDb.services.exceptions.ResourceNotFoundException;
-import lombok.Setter;
+import com.brunosenigalha.curriculumMongoDb.services.validations.ToolValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,8 @@ public class ToolService {
     private ProjectConverter converter;
     @Autowired
     private CurriculumService curriculumService;
+    @Autowired
+    private ToolValidation toolValidation;
 
     public List<ToolEntity> findAll() {
         return repository.findAll();
@@ -34,13 +36,17 @@ public class ToolService {
     }
 
     public ToolEntity findByName(String name) {
-        return repository.findByNameIgnoreCase(name);
+        return toolValidation.checkingIfToolExists(name);
     }
 
     public ToolEntity insert(String id, ToolRequestDTO objDTO) {
-        ToolEntity entity = converter.forToolEntity(objDTO);
-        addToolToCurriculum(entity, id);
-        repository.save(entity);
+        ToolEntity entity = toolValidation.checkingIfToolExists(objDTO.getName());
+
+        if (entity == null) {
+            entity = converter.forToolEntity(objDTO);
+            addToolToCurriculum(entity, id);
+            repository.save(entity);
+        }
         return entity;
     }
 
@@ -49,7 +55,7 @@ public class ToolService {
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         try {
             repository.delete(entity);
-        }catch(DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -59,4 +65,5 @@ public class ToolService {
         entity.getTools().add(obj);
         curriculumService.saveCurriculum(entity);
     }
+
 }
